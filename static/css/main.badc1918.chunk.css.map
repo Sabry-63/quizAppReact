@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/app.css"],"names":[],"mappings":"AAAA,QACI,mBAAoB,CACpB,cAAe,CACf,+BACJ","file":"main.badc1918.chunk.css","sourcesContent":[".hidden {\r\n    pointer-events: none;\r\n    cursor: default;\r\n    background-color: #ccc !important;\r\n}\r\n"]}
