@@ -1,0 +1,5 @@
+.hidden {
+    pointer-events: none;
+    cursor: default;
+    background-color: #ccc !important;
+}
