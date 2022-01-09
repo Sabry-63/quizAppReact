@@ -35,9 +35,12 @@ const Questions = () => {
     // Use State
     const [questionIndex, setQuestionIndex] = useState(0);
     const [option, setOption] = useState([]);
+    // Set Radio Value
     const [value, setValue] = useState("");
+    // Set Checked
     const [checked, setchecked] = useState(true);
     const checkedOn = () => setchecked(false);
+    // Ref To Count
     const countRef = useRef(null);
 
     // Default Api
