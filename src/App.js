@@ -12,7 +12,13 @@ const App = () => {
     return (
         <Router basename={process.env.PUBLIC_URL}>
             <Container maxWidth="sm">
-                <Box textAlign="center" mt={5}>
+                <Box
+                    textAlign="center"
+                    height="100vh"
+                    width={1}
+                    display="grid"
+                    alignItems="center"
+                >
                     <Routes>
                         <Route path="/" exact element={<Settings />} />
                         <Route path="/questions" element={<Questions />} />

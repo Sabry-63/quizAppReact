@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-axios.defaults.baseURL = "https://opentdb.com/";
+axios.defaults.baseURL = "https://opentdb.com";
 
 const Useaxios = ({ url }) => {
     const [respons, setRespons] = useState(null);

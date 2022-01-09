@@ -16,14 +16,6 @@ import { useState, useEffect, useRef } from "react";
 import { decode } from "html-entities";
 import { useNavigate } from "react-router-dom";
 import { handleScoreChange } from "./../redux/action";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
-
-const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    color: theme.palette.text.secondary,
-}));
 
 const Questions = () => {
     const { qu_category, qu_diffic, qu_type, qu_amount, score } = useSelector(
@@ -50,6 +42,17 @@ const Questions = () => {
 
     // Default Api
     let apiUrl = `/api.php?amount=${qu_amount}`;
+
+    // Set Api Setiing
+    if (qu_category) {
+        apiUrl = apiUrl.concat(`&category=${qu_category}`);
+    }
+    if (qu_diffic) {
+        apiUrl = apiUrl.concat(`&difficulty=${qu_diffic}`);
+    }
+    if (qu_type) {
+        apiUrl = apiUrl.concat(`&type=${qu_type}`);
+    }
 
     // GET Data Form Reducer
     const { respons, loading } = Useaxios({ url: apiUrl });
@@ -85,21 +88,10 @@ const Questions = () => {
         }
     }, [timeLeft, loading]);
 
-    // Set Api Setiing
-    if (qu_category) {
-        apiUrl = apiUrl.concat(`&category=${qu_category}`);
-    }
-    if (qu_diffic) {
-        apiUrl = apiUrl.concat(`&difficulty=${qu_diffic}`);
-    }
-    if (qu_type) {
-        apiUrl = apiUrl.concat(`&type=${qu_type}`);
-    }
-
     // If Data Is Load
     if (loading) {
         return (
-            <Box mt={20}>
+            <Box>
                 <CircularProgress />
             </Box>
         );
@@ -119,6 +111,7 @@ const Questions = () => {
             setQuestionIndex(questionIndex + 1);
             setTimeLeft(seconds);
             setchecked(true);
+            setValue("");
         } else {
             navigate("/score");
         }
@@ -130,79 +123,86 @@ const Questions = () => {
 
     return (
         <Box>
-            <Grid container spacing={1}>
-                <Grid item xs={6} md={8}>
-                    <Item>
-                        <Typography variant="h5">
-                            Question {questionIndex + 1} /
-                            {respons.results.length}
-                        </Typography>
-                    </Item>
+            <Grid container spacing={2} boxShadow={3} bgcolor="white">
+                <Grid xs={12} md={8}>
+                    <Typography
+                        variant="h5"
+                        p={2}
+                        mr={2}
+                        backgroundColor="primary.main"
+                        color="white"
+                    >
+                        Question {questionIndex + 1} /{respons.results.length}
+                    </Typography>
                 </Grid>
-                <Grid item xs={6} md={4}>
-                    <Item>
-                        <Typography
-                            variant="h6"
-                            color={timeLeft < 10 ? "red" : ""}
-                        >
-                            Timer : {timeLeft}
-                        </Typography>
-                    </Item>
+                <Grid xs={12} md={4}>
+                    <Typography
+                        p={2}
+                        variant="h6"
+                        color={timeLeft < 10 ? "red" : "primary.main"}
+                    >
+                        Timer : {timeLeft}
+                    </Typography>
                 </Grid>
             </Grid>
 
-            <Grid mt={2} spacing={2} container>
-                <Grid item xs={12}>
-                    <Item>
-                        <form onSubmit={handleSubmit} ref={ref}>
-                            <FormControl
-                                sx={{ m: 3 }}
-                                component="fieldset"
-                                variant="standard"
-                            >
+            <Grid mt={2} spacing={2} container boxShadow={3} bgcolor="white">
+                <Grid xs={12} p={2}>
+                    <form onSubmit={handleSubmit} ref={ref}>
+                        <FormControl
+                            sx={{ m: 3 }}
+                            component="fieldset"
+                            variant="standard"
+                        >
+                            <Box borderBottom={1} pb={2} mb={2}>
                                 <FormLabel component="legend">
                                     {decode(
                                         respons.results[questionIndex].question
                                     )}
                                 </FormLabel>
-                                <RadioGroup
-                                    aria-label="quiz"
-                                    name="quiz"
-                                    value={value}
-                                    onChange={handleRadioChange}
-                                >
-                                    {option.map((data, id) => {
-                                        return (
-                                            <FormControlLabel
-                                                value={data}
-                                                control={<Radio />}
-                                                label={decode(data)}
-                                                key={id}
-                                            />
-                                        );
-                                    })}
-                                </RadioGroup>
-                                <Button
-                                    sx={{ mt: 1, mr: 1 }}
-                                    type="submit"
-                                    variant="contained"
-                                    ref={countRef}
-                                    className={
-                                        checked === false ? "show" : "hidden"
-                                    }
-                                >
-                                    Check Answer
-                                </Button>
-                            </FormControl>
-                        </form>
-                    </Item>
+                            </Box>
+                            <RadioGroup
+                                aria-label="quiz"
+                                name="quiz"
+                                value={value}
+                                onChange={handleRadioChange}
+                            >
+                                {option.map((data, id) => {
+                                    return (
+                                        <FormControlLabel
+                                            value={data}
+                                            control={<Radio />}
+                                            label={decode(data)}
+                                            key={id}
+                                        />
+                                    );
+                                })}
+                            </RadioGroup>
+                            <Button
+                                sx={{ mt: 1, mr: 1 }}
+                                type="submit"
+                                variant="contained"
+                                ref={countRef}
+                                className={
+                                    checked === false ? "show" : "hidden"
+                                }
+                            >
+                                Check Answer
+                            </Button>
+                        </FormControl>
+                    </form>
                 </Grid>
-                <Grid item xs={12}>
-                    <Item>
-                        <Typography variant="h6">
-                            Your Score {score} / {respons.results.length}
-                        </Typography>
-                    </Item>
+                <Grid
+                    xs={12}
+                    borderTop={1}
+                    borderColor="primary.main"
+                    backgroundColor="primary.main"
+                    color="white"
+                    p={2}
+                >
+                    <Typography variant="h6">
+                        Your Score {score} / {respons.results.length}
+                    </Typography>
                 </Grid>
             </Grid>
         </Box>
