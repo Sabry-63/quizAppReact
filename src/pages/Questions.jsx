@@ -125,13 +125,12 @@ const Questions = () => {
     };
 
     return (
-        <Box>
-            <Grid container spacing={2} boxShadow={3} bgcolor="white">
+        <Box py={5}>
+            <Grid container boxShadow={3} bgcolor="white">
                 <Grid xs={12} md={8}>
                     <Typography
                         variant="h5"
                         p={2}
-                        mr={2}
                         backgroundColor="primary.main"
                         color="white"
                     >
@@ -149,7 +148,7 @@ const Questions = () => {
                 </Grid>
             </Grid>
 
-            <Grid mt={2} spacing={2} container boxShadow={3} bgcolor="white">
+            <Grid mt={2} container boxShadow={3} bgcolor="white">
                 <Grid xs={12} p={2}>
                     <form onSubmit={handleSubmit} ref={ref}>
                         <FormControl

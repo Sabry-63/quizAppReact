@@ -19,6 +19,7 @@ const TextFiledCop = () => {
                     label="Amount Of Questions"
                     type="number"
                     size="small"
+                    InputProps={{ inputProps: { min: 10, max: 50 } }}
                 />
             </FormControl>
         </Box>
